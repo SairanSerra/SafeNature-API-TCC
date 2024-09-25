@@ -19,7 +19,7 @@ jobs:
           push: true
           context: .
           file: Dockerfile.prod
-          tags: sairan/cadastro-cliente:latest
+          tags: sairan/safenatureapi:latest
       - name: Update image in stack
         uses: distributhor/workflow-webhook@v2
         env:
