@@ -1,0 +1,28 @@
+name: DEPLOY
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do repositorio
+        uses: actions/checkout@v1
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{secrets.DOCKER_HUB_USERNAME}}
+          password: ${{secrets.DOCKER_HUB_ACCESS_TOKEN}}
+      - uses: docker/build-push-action@v4
+        with:
+          push: true
+          context: .
+          file: Dockerfile.prod
+          tags: sairan/cadastro-cliente:latest
+      - name: Update image in stack
+        uses: distributhor/workflow-webhook@v2
+        env:
+          webhook_url: ${{secrets.WEB_HOOK_DOCKER_URL}}
+          webhook_secret: 'Y0uR5ecr3t'
+          verify_ssl: false

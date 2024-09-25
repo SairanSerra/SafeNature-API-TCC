@@ -1,0 +1,11 @@
+version: '3.5'
+
+services:
+  safeNatureApi:
+    container_name: safeNatureApi
+    image: sairan/safenatureapi:latest
+    restart: always
+    env_file:
+      - stack.env
+    ports:
+      - 8888:80
