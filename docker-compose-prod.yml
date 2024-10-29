@@ -9,3 +9,15 @@ services:
       - stack.env
     ports:
       - 8888:80
+    networks:
+      - mysql-network
+      - proxy-reverse-network
+
+  networks:
+    mysql-network:
+     name: mysql-network
+     driver: bridge
+
+    proxy-reverse-network:
+     name: proxy-reverse-network
+     driver: bridge

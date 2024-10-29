@@ -19,7 +19,7 @@ class ListDisasterWithCobradeResource extends JsonResource
             'id'                    => $this->id,
             'latitude'              => $this->latitude,
             'longitude'             => $this->longitude,
-            'cobradeId'             => $cobrade->id,
+            'cobradeId'             => $cobrade->cobrade,
             'cobradeType'           => $cobrade->type,
             'cobradeDescription'    => $cobrade->description,
             'city'                  => $this->city,
