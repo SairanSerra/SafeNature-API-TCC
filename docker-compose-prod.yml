@@ -20,4 +20,4 @@ services:
 
     proxy-reverse-network:
      name: proxy-reverse-network
-     driver: bridge
+     external: true
