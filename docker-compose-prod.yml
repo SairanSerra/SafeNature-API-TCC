@@ -15,9 +15,7 @@ services:
 
   networks:
     mysql-network:
-     name: mysql-network
      external: true
 
     proxy-reverse-network:
-     name: proxy-reverse-network
      external: true
