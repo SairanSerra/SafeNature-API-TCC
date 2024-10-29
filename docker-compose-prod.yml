@@ -15,7 +15,6 @@ services:
 
   networks:
     mysql-network:
-     external: true
-
+     driver: 'bridge'
     proxy-reverse-network:
-     external: true
+     driver: 'bridge'
