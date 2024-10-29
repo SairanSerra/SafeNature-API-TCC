@@ -24,7 +24,7 @@ class Disasters extends Model
     ];
 
     public function cobrade(){
-        return $this->hasOne(Cobrade::class, 'id', 'idCobrade');
+        return $this->hasOne(Cobrade::class, 'cobrade', 'idCobrade');
     }
 
 }

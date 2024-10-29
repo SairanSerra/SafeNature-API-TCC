@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\Disasters\ListDisastersService;
 use Illuminate\Http\Request;
 
 class DisastersController extends Controller
 {
-    public function __construct(){
-
+    private $listDisastersService;
+    public function __construct(ListDisastersService $listDisastersService){
+        $this->listDisastersService = $listDisastersService;
     }
 
-    public function list(): void
+    public function list()
     {
 
-        
+       return $this->listDisastersService->index();
 
     }
 }

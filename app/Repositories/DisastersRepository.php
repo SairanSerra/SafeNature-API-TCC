@@ -26,7 +26,7 @@ class DisastersRepository implements DisastersRepositoryInterface
 
     public function getAllWithCobrade()
     {
-        return $this->model->get();
+        return $this->model->with('cobrade')->get();
     }
 
 }
