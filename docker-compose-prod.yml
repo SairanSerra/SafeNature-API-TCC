@@ -13,8 +13,8 @@ services:
       - mysql-network
       - proxy-reverse-network
 
-  networks:
-    mysql-network:
-     driver: 'bridge'
-    proxy-reverse-network:
-     driver: 'bridge'
+networks:
+  mysql-network:
+    driver: bridge
+  proxy-reverse-network:
+    driver: bridge
