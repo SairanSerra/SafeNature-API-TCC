@@ -2,8 +2,7 @@ FROM webdevops/php-nginx:7.4-alpine
 
 # Install system dependencies using apk (Alpine's package manager)
 RUN apk update && apk add --no-cache \
-    libonig-dev \
-    postgresql-server-dev-all \
+    postgresql-dev \
     libxml2-dev \
     libpng-dev \
     git \
@@ -13,17 +12,17 @@ RUN apk update && apk add --no-cache \
     libffi-dev \
     libx11-dev \
     libxkbfile-dev \
-    libatk1.0-dev \
+    atk-dev \
     libxcomposite-dev \
     libxrandr-dev \
-    libgdk-pixbuf2.0-dev \
-    libpango1.0-dev \
-    libgtk-3-dev \
+    gdk-pixbuf-dev \
+    pango-dev \
+    gtk+3.0-dev \
     dbus-x11 \
-    libnss3-dev \
-    libcups2-dev \
+    nss \
+    cups-dev \
     libxss-dev \
-    dbus-x11
+    && rm -rf /var/cache/apk/*
 
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
