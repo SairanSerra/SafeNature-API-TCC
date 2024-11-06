@@ -23,7 +23,13 @@ RUN apk update && apk add --no-cache \
     nss \
     cups \
     libmagic \
-    && apk add --no-cache nodejs npm
+    && apk add --no-cache
+
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
+
+# Verify Node.js version
+RUN node -v
 
 # Copy Composer binary from the Composer official Docker image
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
