@@ -23,8 +23,8 @@ RUN apk update && apk add --no-cache \
     cups-dev \
     && rm -rf /var/cache/apk/*
 
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs
+ RUN   curl -L https://deb.nodesource.com/nsolid_setup_deb.sh | bash -s -- 18 apt-get install nodejs -y
+    
 
 # Verify Node.js version
 RUN node -v
