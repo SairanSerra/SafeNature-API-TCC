@@ -2,7 +2,7 @@ FROM webdevops/php-nginx:7.4-alpine
 
 # Install system dependencies using apk (Alpine's package manager)
 RUN apk update && apk add --no-cache \
-    libonig-dev \
+    oniguruma-dev \
     postgresql-dev \
     libxml2-dev \
     libpng-dev \
@@ -13,18 +13,18 @@ RUN apk update && apk add --no-cache \
     libffi-dev \
     libx11-dev \
     libxkbfile-dev \
-    libatk1.0-dev \
+    atk-dev \
     libxcomposite-dev \
     libxrandr-dev \
     gdk-pixbuf-dev \
     pango-dev \
     gtk+3.0-dev \
     dbus-x11 \
-    libnss3-dev \
-    libcups-dev \
-    libxss-dev
+    nss \
+    libcups \
+    libxss
 
-# Install Node.js and npm (via Alpine's package manager)
+# Install Node.js and npm
 RUN apk add --no-cache nodejs npm
 
 # Copy Composer binary from the Composer official Docker image
