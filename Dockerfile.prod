@@ -21,8 +21,7 @@ RUN apk update && apk add --no-cache \
     gtk+3.0-dev \
     dbus-x11 \
     nss \
-    libcups \
-    libxss
+    cups 
 
 # Install Node.js and npm
 RUN apk add --no-cache nodejs npm
