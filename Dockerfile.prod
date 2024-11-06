@@ -22,8 +22,7 @@ RUN apk update && apk add --no-cache \
     dbus-x11 \
     nss \
     cups \
-    libmagic \
-    && apk add --no-cache
+    libmagic
 
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apk add --no-cache nodejs npm
