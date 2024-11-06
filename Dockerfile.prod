@@ -25,7 +25,7 @@ RUN apk update && apk add --no-cache \
     libmagic
 
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apk add --no-cache nodejs npm
+    && apt-get install -y nodejs
 
 # Verify Node.js version
 RUN node -v
