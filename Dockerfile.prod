@@ -1,9 +1,9 @@
 FROM webdevops/php-nginx:7.4-alpine
 
-# Install Laravel framework system requirements (https://laravel.com/docs/8.x/deployment#optimizing-configuration-loading)
-RUN apt-get update && apt-get install -y \
+# Install system dependencies using apk (Alpine's package manager)
+RUN apk update && apk add --no-cache \
     libonig-dev \
-    postgresql-server-dev-all \
+    postgresql-dev \
     libxml2-dev \
     libpng-dev \
     git \
@@ -16,18 +16,16 @@ RUN apt-get update && apt-get install -y \
     libatk1.0-dev \
     libxcomposite-dev \
     libxrandr-dev \
-    libgdk-pixbuf2.0-dev \
-    libpango1.0-dev \
-    libgtk-3-dev \
+    gdk-pixbuf-dev \
+    pango-dev \
+    gtk+3.0-dev \
     dbus-x11 \
     libnss3-dev \
-    libcups2-dev \
-    libxss-dev \
-    dbus-x11
+    libcups-dev \
+    libxss-dev
 
-# Install Node.js and npm
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs
+# Install Node.js and npm (via Alpine's package manager)
+RUN apk add --no-cache nodejs npm
 
 # Copy Composer binary from the Composer official Docker image
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -37,8 +35,10 @@ ENV APP_ENV production
 WORKDIR /app
 COPY . .
 
+# Install Composer dependencies
 RUN composer install --no-interaction
 
+# Install Playwright and browsers
 RUN npm install -g playwright \
     && npx playwright install --with-deps
 
@@ -48,11 +48,11 @@ RUN php artisan config:cache
 RUN php artisan route:cache
 # Optimizing View loading
 RUN php artisan view:cache
-# clear config cache
+# Clear config cache
 RUN php artisan config:clear
 
+# Copy the schedule config for Supervisor
 COPY ./deploy.conf/schedule.conf /opt/docker/etc/supervisor.d/
 
-RUN chown -R application:application .
-# Fix session
-RUN chmod -Rf 777 /app/storage
+RUN chown -R application:application . \
+    && chmod -Rf 777 /app/storage
