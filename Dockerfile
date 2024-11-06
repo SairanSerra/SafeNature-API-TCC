@@ -1,11 +1,36 @@
-FROM php:7.4-fpm-alpine
+FROM php:7.4-fpm
 
-# Install Laravel framework system requirements
-RUN apk add --no-cache \
-        oniguruma-dev \
-        postgresql-dev \
-        libxml2-dev \
-        libpng-dev # Add libpng-dev for GD extension
+# Install necessary dependencies for Playwright and Laravel
+RUN apt-get update && apt-get install -y \
+    libonig-dev \
+    postgresql-server-dev-all \
+    libxml2-dev \
+    libpng-dev \
+    git \
+    curl \
+    bash \
+    ca-certificates \
+    libffi-dev \
+    libx11-dev \
+    libxkbfile-dev \
+    libatk1.0-dev \
+    libxcomposite-dev \
+    libxrandr-dev \
+    libgdk-pixbuf2.0-dev \
+    libpango1.0-dev \
+    libgtk-3-dev \
+    dbus-x11 \
+    libnss3-dev \
+    libcups2-dev \
+    libxss-dev \
+    dbus-x11
+
+# Install Node.js and npm
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
+
+# Verify Node.js version
+RUN node -v
 
 # Install GD extension
 RUN docker-php-ext-install gd
@@ -26,29 +51,21 @@ RUN docker-php-ext-install \
 RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
 
 # Set working directory
-WORKDIR /app/ignicao-digital
+WORKDIR /app/safeNatureApi
 
 # Copy application files
 COPY . .
 
 # Set Composer environment variables
 ENV COMPOSER_ALLOW_SUPERUSER=1
-ENV COMPOSER_VENDOR_DIR="/app/ignicao-digital/vendor"
+ENV COMPOSER_VENDOR_DIR="/app/safeNatureApi/vendor"
 
 # Install Composer dependencies
 RUN composer install --ignore-platform-reqs
 
+# Install Playwright and download browsers
+RUN npm install -g playwright \
+    && npx playwright install --with-deps
+
 # Cache Laravel configuration
-RUN php artisan config:cache
-
-# Cache Laravel routes
-RUN php artisan route:cache
-
-# Cache Laravel views
-RUN php artisan view:cache
-
-# Clear configuration cache
-RUN php artisan config:clear
-
-# Start Laravel application
-CMD php artisan serve --host=0.0.0.0 --port=8000
+CMD ["sh"]

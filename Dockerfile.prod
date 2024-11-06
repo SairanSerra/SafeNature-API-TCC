@@ -1,16 +1,33 @@
 FROM webdevops/php-nginx:7.4-alpine
 
 # Install Laravel framework system requirements (https://laravel.com/docs/8.x/deployment#optimizing-configuration-loading)
-RUN apk add oniguruma-dev libxml2-dev
-RUN docker-php-ext-install \
-        bcmath \
-        ctype \
-        fileinfo \
-        json \
-        mbstring \
-        pdo_mysql \
-        tokenizer \
-        xml
+RUN apt-get update && apt-get install -y \
+    libonig-dev \
+    postgresql-server-dev-all \
+    libxml2-dev \
+    libpng-dev \
+    git \
+    curl \
+    bash \
+    ca-certificates \
+    libffi-dev \
+    libx11-dev \
+    libxkbfile-dev \
+    libatk1.0-dev \
+    libxcomposite-dev \
+    libxrandr-dev \
+    libgdk-pixbuf2.0-dev \
+    libpango1.0-dev \
+    libgtk-3-dev \
+    dbus-x11 \
+    libnss3-dev \
+    libcups2-dev \
+    libxss-dev \
+    dbus-x11
+
+# Install Node.js and npm
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
 
 # Copy Composer binary from the Composer official Docker image
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -21,7 +38,10 @@ WORKDIR /app
 COPY . .
 
 RUN composer install --no-interaction
-#--optimize-autoloader --no-dev
+
+RUN npm install -g playwright \
+    && npx playwright install --with-deps
+
 # Optimizing Configuration loading
 RUN php artisan config:cache
 # Optimizing Route loading
@@ -30,6 +50,8 @@ RUN php artisan route:cache
 RUN php artisan view:cache
 # clear config cache
 RUN php artisan config:clear
+
+COPY ./deploy.conf/schedule.conf /opt/docker/etc/supervisor.d/
 
 RUN chown -R application:application .
 # Fix session
