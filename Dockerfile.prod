@@ -21,10 +21,10 @@ RUN apk update && apk add --no-cache \
     dbus-x11 \
     nss \
     cups-dev \
-    && rm -rf /var/cache/apk/*
+    libseccomp
 
- RUN   curl -L https://deb.nodesource.com/nsolid_setup_deb.sh | bash -s -- 18 apt-get install nodejs -y
-    
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
 
 # Verify Node.js version
 RUN node -v
