@@ -22,11 +22,8 @@ RUN apk update && apk add --no-cache \
     dbus-x11 \
     nss \
     cups \
-    && apk add --no-cache --virtual .build-deps \
-    libmagic
-
-# Install Node.js and npm
-RUN apk add --no-cache nodejs npm
+    libmagic \
+    && apk add --no-cache nodejs npm
 
 # Copy Composer binary from the Composer official Docker image
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -41,7 +38,7 @@ RUN composer install --no-interaction
 
 # Install Playwright and browsers
 RUN npm install -g playwright \
-    && npx playwright install --with-deps
+    && npx playwright install --with-deps --verbose
 
 # Optimizing Configuration loading
 RUN php artisan config:cache
