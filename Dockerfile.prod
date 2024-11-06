@@ -21,7 +21,6 @@ RUN apk update && apk add --no-cache \
     dbus-x11 \
     nss \
     cups-dev \
-    libxss-dev \
     && rm -rf /var/cache/apk/*
 
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
