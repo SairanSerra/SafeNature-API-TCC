@@ -13,9 +13,9 @@ services:
       - mysql-network
       - proxy-reverse-network
 
-  safeNatureCronJon:
+  safeNatureCronJob:
     container_name: safeNatureCronJon
-    image: sairan/safenatureapi:latest
+    image: sairan/safenaturecronjob:latest
     restart: always
     env_file:
       - stack.env
