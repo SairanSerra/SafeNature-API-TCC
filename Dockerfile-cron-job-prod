@@ -66,3 +66,6 @@ RUN npm install -g playwright \
     && npx playwright install --with-deps
 
 
+CMD ["bash", "./entrypoint.sh"]
+
+
