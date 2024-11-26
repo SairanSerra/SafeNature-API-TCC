@@ -1,4 +1,4 @@
-FROM php:7.4-fpm
+FROM php:7.4-cli
 
 # Install necessary dependencies for Playwright and Laravel
 RUN apt-get update && apt-get install -y \
@@ -48,7 +48,7 @@ RUN docker-php-ext-install \
         xml
 
 # Install Composer
-RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Set working directory
 WORKDIR /app/safeNatureApi
@@ -56,9 +56,7 @@ WORKDIR /app/safeNatureApi
 # Copy application files
 COPY . .
 
-# Set Composer environment variables
-ENV COMPOSER_ALLOW_SUPERUSER=1
-ENV COMPOSER_VENDOR_DIR="/app/safeNatureApi/vendor"
+RUN composer self-update
 
 # Install Composer dependencies
 RUN composer install --ignore-platform-reqs
