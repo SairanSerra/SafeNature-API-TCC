@@ -17,7 +17,7 @@ services:
     container_name: safeNatureCronJob
     image: sairan/safenaturecronjob:latest
     restart: always
-    command: ["php", "/var/www/app/safeNatureApi", "schedule:work"]
+    command: ["ls"]
     env_file:
       - stack.env
     ports:
