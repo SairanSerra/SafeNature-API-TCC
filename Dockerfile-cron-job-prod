@@ -67,5 +67,4 @@ RUN composer install --ignore-platform-reqs
 RUN npm install -g playwright \
     && npx playwright install --with-deps
 
-# Cache Laravel configuration
-CMD ["php artisan schedule:work"]
+

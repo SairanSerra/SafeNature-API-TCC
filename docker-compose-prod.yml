@@ -16,6 +16,7 @@ services:
   safeNatureCronJob:
     container_name: safeNatureCronJob
     image: sairan/safenaturecronjob:latest
+    command: ["php artisan schedule:work"]
     restart: always
     env_file:
       - stack.env

@@ -41,7 +41,7 @@ jobs:
         with:
           push: true
           context: .
-          file: Dockerfile-cron-job-prod.yml
+          file: Dockerfile-cron-job-prod
           tags: sairan/safenaturecronjob:latest
       - name: Update image in stack
         uses: distributhor/workflow-webhook@v2
