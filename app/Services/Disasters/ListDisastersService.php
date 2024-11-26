@@ -17,11 +17,18 @@ class ListDisastersService
         $this->defaultResponse = $defaultResponse;
     }
 
-    public function index()
+    public function index(array $payload)
     {
         $listDisasters = $this->disastersRepository->getAllWithCobrade();
 
-        $content = ListDisasterWithCobradeResource::collection($listDisasters);
+        $latitude = $payload['latitude'] ?? false;
+        $longitude = $payload['longitude'] ?? false;
+
+        $hasExistLatLong = $latitude && $longitude;
+
+        $content = collect(ListDisasterWithCobradeResource::collection($listDisasters));
+
+        $content = $content->sortByDesc($hasExistLatLong ? 'distance' : 'id');
 
         return $this->defaultResponse->isSuccessWithContent('Lista de ocorrências', 200, $content);
     }

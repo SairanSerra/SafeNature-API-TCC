@@ -13,6 +13,10 @@ services:
       - mysql-network
       - proxy-reverse-network
 
+  safeNatureCronJon:
+  container_name: safeNatureCronJon
+  image: sairan/safenatureapi:latest
+
 networks:
   mysql-network:
     driver: bridge

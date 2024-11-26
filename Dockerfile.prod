@@ -53,8 +53,5 @@ RUN php artisan view:cache
 # Clear config cache
 RUN php artisan config:clear
 
-# Copy the schedule config for Supervisor
-COPY ./deploy.conf/schedule.conf /opt/docker/etc/supervisor.d/
-
 RUN chown -R application:application . \
     && chmod -Rf 777 /app/storage

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Utils\CalculateDistanceByLatLong;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ListDisasterWithCobradeResource extends JsonResource
@@ -14,6 +15,7 @@ class ListDisasterWithCobradeResource extends JsonResource
      */
     public function toArray($request)
     {
+        $calculateDistance = new CalculateDistanceByLatLong();
         $cobrade = $this->cobrade;
         return [
             'id'                    => $this->id,
@@ -23,7 +25,10 @@ class ListDisasterWithCobradeResource extends JsonResource
             'cobradeType'           => $cobrade->type,
             'cobradeDescription'    => $cobrade->description,
             'city'                  => $this->city,
-            'state'                 => $this->state
+            'state'                 => $this->state,
+            'distance'              => $request->latitude && $request->longitude ?
+                                       $calculateDistance->index($request->latitude, $request->longitude, $this->latitude,  $this->longitude)
+                                       : 'Localização não informado'
         ];
     }
 }
