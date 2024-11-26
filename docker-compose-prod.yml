@@ -14,16 +14,16 @@ services:
       - proxy-reverse-network
 
   safeNatureCronJon:
-  container_name: safeNatureCronJon
-  image: sairan/safenatureapi:latest
-  restart: always
-  env_file:
-    - stack.env
-  ports:
-    - 9999:80
-  networks:
-    - mysql-network
-    - proxy-reverse-network
+    container_name: safeNatureCronJon
+    image: sairan/safenatureapi:latest
+    restart: always
+    env_file:
+      - stack.env
+    ports:
+      - 9999:80
+    networks:
+      - mysql-network
+      - proxy-reverse-network
 
 networks:
   mysql-network:
