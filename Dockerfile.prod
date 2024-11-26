@@ -23,12 +23,6 @@ RUN apk update && apk add --no-cache \
     cups-dev \
     libseccomp
 
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs
-
-# Verify Node.js version
-RUN node -v
-
 # Copy Composer binary from the Composer official Docker image
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -39,10 +33,6 @@ COPY . .
 
 # Install Composer dependencies
 RUN composer install --no-interaction
-
-# Install Playwright and browsers
-RUN npm install -g playwright \
-    && npx playwright install --with-deps --verbose
 
 # Optimizing Configuration loading
 RUN php artisan config:cache
