@@ -14,7 +14,7 @@ services:
       - proxy-reverse-network
 
   safeNatureCronJob:
-    container_name: safeNatureCronJon
+    container_name: safeNatureCronJob
     image: sairan/safenaturecronjob:latest
     restart: always
     env_file:
