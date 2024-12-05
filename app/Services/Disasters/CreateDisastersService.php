@@ -28,6 +28,8 @@ class CreateDisastersService
 
         $output = trim($process->getOutput());
 
+        print_r("Token {$output}");
+
         $authToken = $output;
 
         $disasters = Http::withHeaders(['auth-token' => $authToken])

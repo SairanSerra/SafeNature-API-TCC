@@ -28,7 +28,7 @@ class ListDisastersService
 
         $content = collect(ListDisasterWithCobradeResource::collection($listDisasters));
 
-        $content = $content->sortByDesc($hasExistLatLong ? 'distance' : 'id');
+        $content = $content->sortBy($hasExistLatLong ? 'distance' : 'id');
 
         return $this->defaultResponse->isSuccessWithContent('Lista de ocorrências', 200, $content);
     }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class NewTableCredentialAPIDisasters extends Migration
+class DeviceInformations extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class NewTableCredentialAPIDisasters extends Migration
      */
     public function up()
     {
-        Schema::create('credentialsApiDisasters', function(Blueprint $table){
+        Schema::create('deviceInformations', function(Blueprint $table){
             $table->id();
-            $table->string('credential');
+            $table->string('deviceId')->unique();
+            $table->decimal('longitude', 10, 7);
+            $table->decimal('latitude', 10, 7);
             $table->timestamp('createdAt')->useCurrent();
+            $table->timestamp('updatedAt')->useCurrent();
         });
     }
 
@@ -27,6 +30,6 @@ class NewTableCredentialAPIDisasters extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('deviceInformations');
     }
 }

@@ -18,4 +18,5 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix'  => 'v1'], function()
 {
     Route::get('/list-disasters', [DisastersController::class, 'list']);
+    Route::post('/check-disaster', [DisastersController::class, 'checkDisaster']);
 });
